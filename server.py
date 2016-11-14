@@ -29,3 +29,9 @@ if __name__ == "__main__":
     serv = socketserver.UDPServer(('', 6001), EchoHandler)
     print("Lanzando servidor UDP de eco...")
     serv.serve_forever()
+
+    #Debemos transformalo para llamarle de esta manera:
+            # python.py metodo (INVITE O BYE) receptor@IPreceptor:puertoSIP
+            # client.py BYE robin@193.147.73.20:5555
+            # sino que nos salga el usage error
+            #al servidor debemos darle un puerto distinto al 5060
