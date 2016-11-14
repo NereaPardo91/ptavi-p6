@@ -15,16 +15,14 @@ class EchoHandler(socketserver.DatagramRequestHandler):
     """
 
     def handle(self):
-        # Escribe dirección y puerto del cliente (de tupla client_address)
-        self.wfile.write(b"Hemos recibido tu peticion")
-        while 1:
-            # Leyendo línea a línea lo que nos envía el cliente
-            line = self.rfile.read()
-            print("El cliente nos manda " + line.decode('utf-8'))
+        line = self.rfile.read()
+        print("El cliente nos manda " + line.decode('utf-8'))
+        line = line.decode('utf-8').split()
 
-            # Si no hay más líneas salimos del bucle infinito
-            if not line:
-                break
+        if line[0] == 'INVITE':
+            self.wfile.write(b'SIP/2.0 100 Trying' + ' ' + b'SIP/2.0 180 Ring')
+        if line[0] == 'BYE':
+            self.wfile.write(b'adios')
 
 if __name__ == "__main__":
     # Creamos servidor de eco y escuchamos
