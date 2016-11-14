@@ -30,3 +30,11 @@ print("Terminando socket...")
 # Cerramos todo
 my_socket.close()
 print("Fin.")
+
+
+# la lanzamos desde la shell de esta manera:
+	# python server.py IP Puerto fichero_audio
+	# si no se envia bien usage error
+	# si todo ok imprime listening....
+#codigos de respuesta:
+	# 
