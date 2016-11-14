@@ -5,20 +5,24 @@ Programa cliente que abre un socket a un servidor
 """
 
 import socket
+import sys
 
-# Cliente UDP simple.
+try:
+	METODO = sys.argv[1]
+	DATOS = sys.argv[2]
+	PORT = int(DATOS.split(":")[-1])
+except:
+	sys.exit("Usage: python client.py receptor@IPreceptor:puertoSIP")
 
-# Dirección IP del servidor.
-SERVER = 'localhost'
-PORT = 6001
-
-# Contenido que vamos a enviar
-LINE = '¡Hola mundo!'
+#AQUI VAN TODOS LOS METODOS INVITE, ACK, BYE
+if METODO == 'INVITE':
+	LINE = METODO
 
 # Creamos el socket, lo configuramos y lo atamos a un servidor/puerto
 my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-my_socket.connect((SERVER, PORT))
+my_socket.connect(('127.0.0.1', PORT))
+
 
 print("Enviando: " + LINE)
 my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
@@ -30,11 +34,3 @@ print("Terminando socket...")
 # Cerramos todo
 my_socket.close()
 print("Fin.")
-
-
-# la lanzamos desde la shell de esta manera:
-	# python server.py IP Puerto fichero_audio
-	# si no se envia bien usage error
-	# si todo ok imprime listening....
-#codigos de respuesta:
-	# 
