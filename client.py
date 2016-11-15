@@ -15,7 +15,7 @@ except:
 
 PORT = int(DATOS.split(":")[-1])
 DIR_SIP = DATOS.split(":")[0]
-ACK = DATOS.split(":")[0] + 'SIP/2.0'
+#ACK = DATOS.split(":")[0] + 'SIP/2.0'
 
 if METODO == 'INVITE':
 	LINE = METODO + ' ' + 'sip:' + DIR_SIP + ' ' + 'SIP/2.0'
@@ -30,12 +30,15 @@ my_socket.connect(('127.0.0.1', PORT))
 print("Enviando: " + LINE)
 my_socket.send(bytes(LINE, 'utf-8') + b'\r\n')
 data = my_socket.recv(1024)
-print(data)
 
-if data.decode == ('SIP/2.0 100 Trying SIP/2.0 180 Ring SIP/2.0 200 OK'):
-	my_socket.send(bytes(ACK))
+ACK = data.decode('utf-8')
+#print(ACK)
+ACK_MSG = 'OK SIP/2.0'
+#print(ACK)
+
+if ACK == ('SIP/2.0 100 Trying SIP/2.0 180 Ring SIP/2.0 200 OK'):
+	my_socket.send(bytes(ACK_MSG, 'utf-8') + b'\r\n')
 	
-
 print('Recibido... ', data.decode('utf-8'))
 print("Terminando socket...")
 
