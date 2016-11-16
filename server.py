@@ -23,6 +23,8 @@ class EchoHandler(socketserver.DatagramRequestHandler):
             self.wfile.write(b'SIP/2.0 100 Trying' + b' ' + b'SIP/2.0 180 Ring' + b' ' + b'SIP/2.0 200 OK')
         elif line[0] == 'BYE':
             self.wfile.write(b'adios')
+        elif line[0] == 'ACK':
+            self.wfile.write(b'SIP/2.0 200 OK')
         else:
             self.wfile.write(b'SIP/2.0 405 Method Not Allowed')
 
