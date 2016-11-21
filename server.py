@@ -15,11 +15,11 @@ try:
 except:
     sys.exit("Usage: python server.py IP port audio_file")
 
+
 class EchoHandler(socketserver.DatagramRequestHandler):
     """
     Echo server class
     """
-
     def handle(self):
         line = self.rfile.read()
         print("El cliente nos manda " + line.decode('utf-8'))
@@ -28,20 +28,18 @@ class EchoHandler(socketserver.DatagramRequestHandler):
         if line[0] == 'INVITE':
             self.wfile.write(b'SIP/2.0 100 Trying' + b' ' + b'SIP/2.0 180 Ring' + b' ' + b'SIP/2.0 200 OK')
         elif line[0] == 'BYE':
-            self.wfile.write(b'adios')
+            self.wfile.write(b'SIP/2.0 200 OK')
         elif line[0] == 'ACK':
-            self.wfile.write(b'ACK recibido')
             aEjecutar = './mp32rtp -i 127.0.0.1 -p 23032 <' + Audio
             print("Vamos a ejecutar", aEjecutar)
             os.system(aEjecutar)
             print("Audio enviado")
-        #elif line < 2:
-         #   self.wfile.write(b'SIP/2.0 400 Bad Request')
+        elif len(lista) != 2:
+            self.wfile.write(b'SIP/2.0 400 Bad Request')
         else:
             self.wfile.write(b'SIP/2.0 405 Method Not Allowed')
 
 if __name__ == "__main__":
-    # Creamos servidor de eco y escuchamos
     serv = socketserver.UDPServer(('', P), EchoHandler)
     print("Lanzando servidor UDP de eco...")
     serv.serve_forever()
