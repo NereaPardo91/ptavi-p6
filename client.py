@@ -36,4 +36,3 @@ if Reply_Server == ('SIP/2.0 100 Trying SIP/2.0 180 Ring SIP/2.0 200 OK'):
 print("Terminando socket...")
 
 my_socket.close()
-print("Fin.")
